@@ -47,6 +47,34 @@
   .stamp { display: flex; flex-direction: column; gap: .1rem; font-family: var(--serif);
            font-size: .9rem; font-style: italic; color: var(--mid); }
   .stamp span::after { content: none; }
+  .stamp .addr { font-family: var(--sans); font-style: normal; font-size: .78rem;
+                 line-height: 1.4; margin-top: .35rem; }
+  .stamp .addr a { color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--hair); }
+
+  /* the one thing everybody has to carry into the day */
+  .alert { margin: 0 1.4rem 1.1rem; padding: .8rem 1rem; border: 1px solid var(--warn);
+           border-radius: 12px; background: color-mix(in srgb, var(--warn) 6%, transparent);
+           color: var(--warn); font-size: .92rem; font-weight: 600; line-height: 1.45; }
+
+  /* who everyone is, folded away until needed */
+  .family { margin: 0 0 1.6rem; background: var(--raise); border: 1px solid var(--hair);
+            border-radius: 16px; overflow: hidden; }
+  .family > summary { list-style: none; cursor: pointer; padding: .95rem 1.1rem;
+                      font-size: .72rem; font-weight: 700; letter-spacing: .16em;
+                      text-transform: uppercase; color: var(--accent);
+                      display: flex; align-items: center; justify-content: space-between;
+                      gap: .5rem; -webkit-tap-highlight-color: transparent; }
+  .family > summary::-webkit-details-marker { display: none; }
+  .family > summary::after { content: "▾"; font-size: .8rem; transition: transform .18s ease; }
+  .family[open] > summary::after { transform: rotate(180deg); }
+  .family > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .family .fam { padding: 0 1.1rem 1rem; display: flex; flex-direction: column; gap: .1rem;
+                 font-size: .9rem; line-height: 1.5; }
+  .family .fam p { margin: .5rem 0; max-width: none; }
+  .family .fam b { color: var(--ink); font-weight: 600; }
+
+  .row .loc { display: inline-block; font-size: .8rem; color: var(--mid);
+              margin-left: .4rem; white-space: nowrap; }
 
   .tabsel { position: absolute; opacity: 0; width: 0; height: 0; }
   .tabs { position: sticky; top: 0; z-index: 20; display: grid; grid-template-columns: 1fr 1fr;
@@ -199,7 +227,8 @@
            text-align: center; }
 
   @media (prefers-reduced-motion: reduce) {
-    .row input::after, .tabs label, #reset, .look summary::after { transition: none; }
+    .row input::after, .tabs label, #reset, .look summary::after,
+    .family > summary::after { transition: none; }
   }
 </style>
 
@@ -209,7 +238,7 @@
   <header>
     <div class="kicker" style="--own:var(--rachel)">For Rachel</div>
     <h1>Brittney &amp; Bear</h1>
-    <div class="stamp"><span>Saturday, July 25</span><span>The Resort at Pelican Hill</span></div>
+    <div class="stamp"><span>Saturday, July 25</span><span>The Resort at Pelican Hill</span><span class="addr"><a href="https://maps.apple.com/?q=22701+S+Pelican+Hill+Rd+South,+Newport+Coast,+CA+92657">22701 S Pelican Hill Rd South, Newport Coast, CA 92657</a></span></div>
   </header>
 
     <div class="couple">
@@ -234,6 +263,7 @@
         <span><i style="background:var(--rachel)"></i>Rachel</span>
         <span>Your lines are shaded. Lighter means shared.</span>
       </div>
+      <div class="alert">Brittney's mom passed. Her dad Jeff walks her down the aisle. He will be emotional.</div>
       <div class="tl">
         <h3>Pre-Ceremony<span class="at">1:00 start, Lawn</span></h3>
         <label class="row" data-own="ricky"><input type="checkbox" data-i="0" /><time></time><span class="txt">Pull over on PCH to get sign &amp; Arch<span class="who">ricky</span></span></label>
@@ -242,7 +272,7 @@
         <label class="row" data-own=""><input type="checkbox" data-i="3" /><time></time><span class="txt">Jayden to bridal suite</span></label>
         <label class="row" data-own=""><input type="checkbox" data-i="4" /><time></time><span class="txt">Bouquet charms, butterfly on veil</span></label>
         <label class="row" data-own=""><input type="checkbox" data-i="5" /><time>2:30</time><span class="txt">Bride into dress</span></label>
-        <label class="row" data-own="victoria"><input type="checkbox" data-i="6" /><time>2:30</time><span class="txt">Groom getting ready<span class="who">victoria</span></span></label>
+        <label class="row" data-own="victoria"><input type="checkbox" data-i="6" /><time>2:30</time><span class="txt">Groom getting ready<span class="loc">@ Laguna Room</span><span class="who">victoria</span></span></label>
         <label class="row mine" data-own="rachel"><input type="checkbox" data-i="7" /><time>3:00</time><span class="txt">FOB First Look (Jeff)<span class="who">rachel</span></span></label>
         <label class="row" data-own=""><input type="checkbox" data-i="8" /><time></time><span class="txt">Potential first look w/ grandpa</span></label>
         <label class="row" data-own=""><input type="checkbox" data-i="9" /><time>3:10</time><span class="txt">Family photos (not necessary)</span></label>
@@ -290,21 +320,25 @@
     <section>
       <h2>Reference</h2>
       <div class="ref">
-        <p><b>Pelican Hill</b> — 22701 S Pelican Hill Rd South, Newport Coast, CA 92657</p>
-        <p>Getting ready: <b>Bride</b> bridal suite · <b>Groom</b> Laguna room</p>
+        
+        
         <p>Brandi (planner) <a href="tel:7143453575">714-345-3575</a> · Megan (photo) <a href="tel:2096284436">209-628-4436</a></p>
-        <hr />
-        <p><b>Bride's family</b> — FOB Jeff · son Jayden (10) · grandpas Henry &amp; Jerry · siblings Demi, Hunter, Chase, Parker</p>
-        <p><b>Groom's family</b> — parents Dana &amp; Gio · grandparents Alberto &amp; Elisabetta · siblings Elisa, Gianna</p>
-        <p><b>Bridesmaids</b> — MH Bree, Jessica, Demi, Kelly, Elisa, Gianna</p>
-        <p><b>Groomsmen</b> — BM TBD, Hunter, Chase, Parker, Jesse, Joe, Scott, Nick, Luigi, Giancarlo, Dominick, Ryan, Cory, Vinny, Billy</p>
-        <hr />
-        <p class="warn">Bride's mom passed. Dad will be emotional.</p>
+        
+        
+        
+        
+        
+        
+        
       </div>
     </section>
   </div>
 
   <div class="panel" id="p-brief">
+      <details class="family">
+        <summary>Family &amp; wedding party</summary>
+        <div class="fam"><p><b>Bride's family</b> — FOB Jeff · son Jayden (10) · grandpas Henry &amp; Jerry · siblings Demi, Hunter, Chase, Parker</p><p><b>Groom's family</b> — parents Dana &amp; Gio · grandparents Alberto &amp; Elisabetta · siblings Elisa, Gianna</p><p><b>Bridesmaids</b> — MH Bree, Jessica, Demi, Kelly, Elisa, Gianna</p><p><b>Groomsmen</b> — BM TBD, Hunter, Chase, Parker, Jesse, Joe, Scott, Nick, Luigi, Giancarlo, Dominick, Ryan, Cory, Vinny, Billy</p></div>
+      </details>
       <section>
         <h2>What this wedding is</h2>
         <p>Bear's side is a large Italian family and the reception turns into a proper Italian party &mdash; Tarantella and other Italian dances around 9:00. Brittney's own words for the look she wants are &ldquo;Italy in Newport&rdquo;: soft and timeless early, big and loud later.</p>

@@ -1,17 +1,1 @@
-{
-  "name": "Brittney & Bear - Rachel",
-  "short_name": "B&B Day",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#EFF2F2",
-  "theme_color": "#B85E12",
-  "icons": [
-    {
-      "src": "apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
-}
+{"name":"Brittney & Bear - Rachel","short_name":"B&B Day","start_url":"./","scope":"./","display":"standalone","background_color":"#F5F3EA","theme_color":"#5C6B3C","icons":[{"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png","purpose":"any maskable"}]}
