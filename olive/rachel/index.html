@@ -16,9 +16,9 @@
 
 <style>
   :root {
-    --bg:#F5F3EA; --raise:#FCFBF6; --ink:#2E3325; --mid:#656B56; --hair:#DDDCCC;
+    --bg:#F5F3EA; --raise:#FCFBF6; --ink:#2E3325; --mid:#5C624E; --hair:#DDDCCC;
     --accent:#5C6B3C; --glow:#EDF0DE; --warn:#8E3B24;
-    --ricky:#4F5B39; --victoria:#6B4A63; --rachel:#8E4A26;
+    --ricky:#3F5E6B; --victoria:#6B4A63; --rachel:#8E4A26;
     --serif:"Iowan Old Style",Charter,Palatino,Georgia,serif;
     --sans:"Avenir Next",Avenir,"Helvetica Neue",system-ui,sans-serif;
     --display:Didot,"Bodoni 72","Hoefler Text",Baskerville,var(--serif);
@@ -77,27 +77,28 @@
 
   /* one continuous panel, chapters divide it from the inside */
   .tl { background: var(--raise); border: 1px solid var(--hair); border-radius: 16px;
-        margin: 0 1.4rem; padding: 0 1.1rem; overflow: hidden;
-        display: flex; flex-direction: column; }
+        margin: 0 1.4rem; overflow: hidden; display: flex; flex-direction: column; }
   h3 { font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .17em;
        text-transform: uppercase; color: var(--accent); background: var(--glow);
-       margin: 0 -1.1rem; padding: .78rem 1.1rem; border: 0; }
+       margin: 0; padding: .78rem 1.1rem; border: 0; }
   h3 .at { font-weight: 600; color: var(--mid); letter-spacing: .1em; margin-left: .7rem; }
 
   .row { display: grid; grid-template-columns: 1.3rem 2.9rem 1fr; gap: 0 .8rem; align-items: start;
-         padding: .8rem 0; min-height: 2.9rem; border-bottom: 1px solid rgba(46,51,37,.08);
+         padding: .8rem 1.1rem; min-height: 2.9rem; border-bottom: 1px solid rgba(46,51,37,.08);
          cursor: pointer; color: var(--mid); background: none;
          -webkit-tap-highlight-color: transparent; }
   .row:last-child { border-bottom: 0; }
-  /* three levels, by ink weight rather than by shading, which survives sunlight */
-  .row.mine, .row.also { color: var(--ink); }
+  /* your lines are shaded olive. Two strengths: yours, and shared with someone. */
+  .row.mine { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--ink); }
+  .row.also { background: color-mix(in srgb, var(--accent) 7%, transparent); color: var(--ink); }
   .row.mine .txt { font-weight: 600; }
 
   .row input { appearance: none; -webkit-appearance: none; margin: 0;
                width: 1.2rem; height: 1.2rem; border-radius: 6px;
                border: 1.5px solid var(--hair); background: var(--bg); cursor: pointer;
                position: relative; flex: none; display: block; }
-  .row.mine input, .row.also input { border-color: var(--own, var(--ink)); }
+  .row.mine input, .row.also input { border-color: var(--accent); }
+  .row.mine input:checked, .row.also input:checked { background: var(--accent); border-color: var(--accent); }
   .row input::after { content: ""; position: absolute; inset: .28rem .26rem;
                       border: solid var(--raise); border-width: 0 0 2px 2px;
                       transform: rotate(-45deg) scale(.4); opacity: 0;
@@ -120,7 +121,7 @@
   /* shared with someone else: yours to know about, not yours to run */
   .row.also .txt::after {
     content: "also you"; display: inline-block; font-size: .58rem; font-weight: 700;
-    letter-spacing: .13em; text-transform: uppercase; color: var(--own);
+    letter-spacing: .13em; text-transform: uppercase; color: var(--accent);
     border: 1px solid currentColor; border-radius: 999px; padding: .1rem .38rem .12rem;
     margin-left: .5rem; white-space: nowrap; vertical-align: .1em; opacity: .85;
   }
@@ -131,14 +132,13 @@
     padding: .14rem .42rem .16rem; border-radius: 999px; margin-left: .5rem; vertical-align: .1em;
   }
 
-  .row.now { background: var(--glow); border-radius: 10px; margin: 0 -.6rem;
-             padding-left: .6rem; padding-right: .6rem; border-bottom-color: transparent; }
+  .row.now { box-shadow: inset 0 0 0 2px var(--accent); }
   .row.done .txt { text-decoration: line-through; text-decoration-thickness: 1px; opacity: .5; }
   .row.done time { opacity: .4; }
 
   /* Victoria's inline "who to look for" drawers */
   .look { border-bottom: 1px solid rgba(46,51,37,.08); }
-  .look summary { list-style: none; cursor: pointer; padding: .62rem 0 .68rem 2.1rem;
+  .look summary { list-style: none; cursor: pointer; padding: .62rem 1.1rem .68rem 3.2rem;
                   font-size: .76rem; font-weight: 600; color: var(--accent);
                   display: flex; align-items: center; gap: .4rem;
                   -webkit-tap-highlight-color: transparent; }
@@ -147,7 +147,7 @@
   .look[open] summary::after { transform: rotate(180deg); }
   .look summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .mini { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem .5rem;
-          padding: .1rem 0 1rem 2.1rem; }
+          padding: .1rem 1.1rem 1rem 3.2rem; }
   .mini figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: .3rem; }
   .mini img { width: 100%; max-width: 3.3rem; aspect-ratio: 1; object-fit: cover;
               object-position: 50% 22%; border-radius: 50%; display: block; }
@@ -232,7 +232,7 @@
         <span><i style="background:var(--ricky)"></i>Ricky</span>
         <span><i style="background:var(--victoria)"></i>Victoria</span>
         <span><i style="background:var(--rachel)"></i>Rachel</span>
-        <span>Your lines are dark. Everyone else's are light.</span>
+        <span>Your lines are shaded. Lighter means shared.</span>
       </div>
       <div class="tl">
         <h3>Pre-Ceremony<span class="at">1:00 start, Lawn</span></h3>
